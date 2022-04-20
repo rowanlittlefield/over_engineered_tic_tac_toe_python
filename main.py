@@ -1,8 +1,10 @@
-from board import Board
+from app.match import Match
+from app.controller import Controller
 
 def main():
-  board = Board()
-  board.render()
+  controller = Controller()
+  match = Match()
+  match.play(controller)
 
 
 if __name__ == "__main__":
