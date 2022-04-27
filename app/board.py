@@ -26,11 +26,17 @@ class Board:
   def game_over(self) -> bool:
     return False
   
-  def move_cursor(self, user_action: UserAction) -> None:
+  def handle_user_action(self, user_action: UserAction) -> None:
     num_rows = len(self.grid)
-    _num_cols = len(self.grid[0])
-    row, _col = self.cursor_position
+    num_cols = len(self.grid[0])
+    row, col = self.cursor_position
     
     match user_action:
       case UserAction.UP:
         self.cursor_position[0] = (row - 1) % num_rows
+      case UserAction.RIGHT:
+        self.cursor_position[1] = (col + 1) % num_cols
+      case UserAction.DOWN:
+        self.cursor_position[0] = (row + 1) % num_rows
+      case UserAction.LEFT:
+        self.cursor_position[1] = (col - 1) % num_cols

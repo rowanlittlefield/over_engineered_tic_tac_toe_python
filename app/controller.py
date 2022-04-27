@@ -10,5 +10,11 @@ class Controller():
     match user_input:
       case 'w':
         return UserAction.UP
+      case 'd':
+        return UserAction.RIGHT
+      case 's':
+        return UserAction.DOWN
+      case 'a':
+        return UserAction.LEFT
       case _:
         return UserAction.NULL

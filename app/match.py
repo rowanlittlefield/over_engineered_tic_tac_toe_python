@@ -10,8 +10,8 @@ class Match():
     while self.board.game_over() is False:
       _clear_terminal()
       self.board.render()
-      user_input = controller.get_input()
-      self.board.move_cursor(user_input)
+      user_action = controller.get_input()
+      self.board.handle_user_action(user_action)
 
 def _clear_terminal() -> None:
   os.system('cls' if os.name == 'nt' else 'clear')
