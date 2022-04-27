@@ -1,12 +1,12 @@
 from app.user_action import UserAction
 
 class Controller():
-  def get_input(self):
+  def get_input(self) -> UserAction:
     user_input = input("Enter your value:")
     user_action = self._map_to_user_action(user_input)
     return user_action
 
-  def _map_to_user_action(self, user_input):
+  def _map_to_user_action(self, user_input) -> UserAction:
     match user_input:
       case 'w':
         return UserAction.UP

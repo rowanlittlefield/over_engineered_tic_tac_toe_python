@@ -10,7 +10,7 @@ class Board:
         [Space.EMPTY, Space.EMPTY, Space.EMPTY],
     ]
 
-  def render(self):
+  def render(self) -> None:
     for idx, row in enumerate(self.grid):
       row_values = []
       for jdx, space in enumerate(row):
@@ -23,10 +23,10 @@ class Board:
       if idx < len(self.grid) - 1:
         print("-----")
   
-  def game_over(self):
+  def game_over(self) -> bool:
     return False
   
-  def move_cursor(self, user_action):
+  def move_cursor(self, user_action: UserAction) -> None:
     num_rows = len(self.grid)
     _num_cols = len(self.grid[0])
     row, _col = self.cursor_position

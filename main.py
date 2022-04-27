@@ -1,7 +1,7 @@
 from app.match import Match
 from app.controller import Controller
 
-def main():
+def main() -> None:
   controller = Controller()
   match = Match()
   match.play(controller)
