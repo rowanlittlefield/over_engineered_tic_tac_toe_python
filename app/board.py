@@ -26,7 +26,7 @@ class Board:
   def game_over(self) -> bool:
     return False
   
-  def handle_user_action(self, user_action: UserAction) -> None:
+  def move_cursor(self, user_action: UserAction) -> None:
     num_rows = len(self.grid)
     num_cols = len(self.grid[0])
     row, col = self.cursor_position
@@ -40,3 +40,11 @@ class Board:
         self.cursor_position[0] = (row + 1) % num_rows
       case UserAction.LEFT:
         self.cursor_position[1] = (col - 1) % num_cols
+  
+  def set_current_space(self, space) -> bool:
+    row, col = self.cursor_position
+    if self.grid[row][col] == Space.EMPTY:
+      self.grid[row][col] = space
+      return True
+    else:
+      return False

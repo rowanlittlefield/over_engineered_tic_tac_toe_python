@@ -8,6 +8,8 @@ class Controller():
 
   def _map_to_user_action(self, user_input) -> UserAction:
     match user_input:
+      case 'f':
+        return UserAction.ENTER
       case 'w':
         return UserAction.UP
       case 'd':
