@@ -19,11 +19,11 @@ class Match():
   def _handle_user_action(self, user_action) -> None:
     match user_action:
       case UserAction.ENTER:
-        self.board.set_current_space(self.current_player)
-      case UserAction.UP|UserAction.RIGHT|UserAction.DOWN|UserAction.LEFT:
-        was_successful = self.board.move_cursor(user_action)
+        was_successful = self.board.set_current_space(self.current_player)
         if was_successful:
           self._toggle_current_user()
+      case UserAction.UP|UserAction.RIGHT|UserAction.DOWN|UserAction.LEFT:
+        self.board.move_cursor(user_action)
 
   
   def _toggle_current_user(self) -> None:
