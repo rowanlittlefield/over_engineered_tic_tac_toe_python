@@ -24,8 +24,34 @@ class Board:
         print("-----")
   
   def game_over(self) -> bool:
-    return False
-  
+    if self._has_won(Space.X) or self._has_won(Space.O):
+      return True
+    
+    flattened_grid = [item for sublist in self.grid for item in sublist]
+    return all(element != Space.EMPTY for element in flattened_grid)
+
+  def winner(self) -> Space | None:
+    if self._has_won(Space.X):
+      return Space.X
+    elif self._has_won(Space.O):
+      return Space.O
+    
+    return None
+
+  def _has_won(self, space: Space) -> bool:
+    has_won = False
+
+    for row in self.grid:
+      has_won = has_won or all(element == space for element in row)
+    
+    for i, _col in enumerate(self.grid[0]):
+      column = []
+      for j, row in enumerate(self.grid):
+        column.append(row[i])
+      has_won = has_won or all(element == space for element in column)
+
+    return has_won
+
   def move_cursor(self, user_action: UserAction) -> None:
     num_rows = len(self.grid)
     num_cols = len(self.grid[0])

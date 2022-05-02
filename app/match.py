@@ -11,10 +11,15 @@ class Match():
   
   def play(self, controller: Controller) -> None:
     while self.board.game_over() is False:
-      _clear_terminal()
-      self.board.render()
-      user_action = controller.get_input()
-      self._handle_user_action(user_action)
+      self._play_tick(controller)
+    
+    self._render_game_over_message()
+
+  def _play_tick(self, controller: Controller):
+    _clear_terminal()
+    self.board.render()
+    user_action = controller.get_input()
+    self._handle_user_action(user_action)
 
   def _handle_user_action(self, user_action) -> None:
     match user_action:
@@ -31,6 +36,16 @@ class Match():
       self.current_player = Space.O
     else:
       self.current_player = Space.X
+  
+  def _render_game_over_message(self) -> None:
+    print("Game Over!")
+    winner = self.board.winner()
+    
+    game_over_message = "Draw!"
+    if winner:
+      game_over_message = f"Winner is {winner.value}"
+
+    print(game_over_message)
 
 def _clear_terminal() -> None:
   os.system('cls' if os.name == 'nt' else 'clear')
