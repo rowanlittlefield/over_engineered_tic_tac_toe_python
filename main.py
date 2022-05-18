@@ -1,10 +1,11 @@
-from app.match import Match
+from app.game import Game
 from app.controller import Controller
+
 
 def main() -> None:
   controller = Controller()
-  match = Match()
-  match.play(controller)
+  game = Game(controller=controller)
+  game.play()
 
 
 if __name__ == "__main__":

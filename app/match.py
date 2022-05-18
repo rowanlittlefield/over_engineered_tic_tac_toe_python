@@ -1,27 +1,34 @@
-import os
+from time import sleep
+
 from app.board import Board
-from app.controller import Controller
+from app.game_state import GameState
 from app.space import Space
+from app.state_tick_result import StateTickResult
+from app.state_status import StateStatus
 from app.user_action import UserAction
 
-class Match():
+class Match(GameState):
   def __init__(self):
     self.board = Board()
     self.current_player = Space.X
-  
-  def play(self, controller: Controller) -> None:
-    while self.board.game_over() is False:
-      self._play_tick(controller)
-    
-    self._render_game_over_message()
 
-  def _play_tick(self, controller: Controller):
-    _clear_terminal()
+  def render(self) -> None:
     self.board.render()
-    user_action = controller.get_input()
+
+  def play_tick(self, user_action: UserAction) -> StateTickResult:
     self._handle_user_action(user_action)
 
-  def _handle_user_action(self, user_action) -> None:
+    if self.board.game_over():
+      self._render_game_over_message()
+
+      return StateTickResult(
+        status=StateStatus.COMPLETED,
+        next_state="main_menu"
+      )
+
+    return StateTickResult(status=StateStatus.IN_PROGRESS)
+
+  def _handle_user_action(self, user_action: UserAction) -> None:
     match user_action:
       case UserAction.ENTER:
         was_successful = self.board.set_current_space(self.current_player)
@@ -29,6 +36,8 @@ class Match():
           self._toggle_current_user()
       case UserAction.UP|UserAction.RIGHT|UserAction.DOWN|UserAction.LEFT:
         self.board.move_cursor(user_action)
+      case _:
+        pass
 
   
   def _toggle_current_user(self) -> None:
@@ -46,6 +55,4 @@ class Match():
       game_over_message = f"Winner is {winner.value}"
 
     print(game_over_message)
-
-def _clear_terminal() -> None:
-  os.system('cls' if os.name == 'nt' else 'clear')
+    sleep(5)

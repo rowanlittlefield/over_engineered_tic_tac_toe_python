@@ -46,7 +46,7 @@ class Board:
     
     for i, _col in enumerate(self.grid[0]):
       column = []
-      for j, row in enumerate(self.grid):
+      for _j, row in enumerate(self.grid):
         column.append(row[i])
       has_won = has_won or all(element == space for element in column)
 
@@ -68,9 +68,10 @@ class Board:
         self.cursor_position[1] = (col - 1) % num_cols
   
   def set_current_space(self, space) -> bool:
+    has_set_space = False
     row, col = self.cursor_position
     if self.grid[row][col] == Space.EMPTY:
       self.grid[row][col] = space
-      return True
-    else:
-      return False
+      has_set_space = True
+    
+    return has_set_space
