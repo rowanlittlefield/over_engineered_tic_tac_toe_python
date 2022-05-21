@@ -1,10 +1,8 @@
 from app.game import Game
-from app.controller.controller import Controller
 
 
 def main() -> None:
-  controller = Controller()
-  game = Game(controller=controller)
+  game = Game()
   game.play()
 
 

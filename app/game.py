@@ -11,7 +11,7 @@ class Game():
     "main_menu": MainMenu
   }
 
-  def __init__(self, *, controller: Controller):
+  def __init__(self, *, controller=Controller()):
     self.state = MainMenu()
     self.controller = controller
   
