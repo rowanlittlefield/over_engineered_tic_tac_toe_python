@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from app.state_status import StateStatus
+from app.game_state.state_status import StateStatus
 
 @dataclass
 class StateTickResult():

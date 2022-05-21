@@ -1,4 +1,4 @@
-from app.user_action import UserAction
+from app.controller.user_action import UserAction
 
 class Controller():
   def get_input(self) -> UserAction:

@@ -1,9 +1,9 @@
 import os
 
-from app.controller import Controller
-from app.main_menu import MainMenu
-from app.match import Match
-from app.state_status import StateStatus
+from app.controller.controller import Controller
+from app.game_state.main_menu.main_menu import MainMenu
+from app.game_state.match.match import Match
+from app.game_state.state_status import StateStatus
 
 class Game():
   STATE_MAP = {

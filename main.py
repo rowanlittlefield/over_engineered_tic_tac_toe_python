@@ -1,5 +1,5 @@
 from app.game import Game
-from app.controller import Controller
+from app.controller.controller import Controller
 
 
 def main() -> None:

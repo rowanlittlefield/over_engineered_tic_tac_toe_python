@@ -1,5 +1,5 @@
-from app.space import Space
-from app.user_action import UserAction
+from app.game_state.match.space import Space
+from app.controller.user_action import UserAction
 
 class Board:
   def __init__(self):

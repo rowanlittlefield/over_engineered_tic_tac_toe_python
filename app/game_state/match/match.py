@@ -1,11 +1,11 @@
 from time import sleep
 
-from app.board import Board
-from app.game_state import GameState
-from app.space import Space
-from app.state_tick_result import StateTickResult
-from app.state_status import StateStatus
-from app.user_action import UserAction
+from app.game_state.match.board import Board
+from app.game_state.game_state import GameState
+from app.game_state.match.space import Space
+from app.game_state.state_tick_result import StateTickResult
+from app.game_state.state_status import StateStatus
+from app.controller.user_action import UserAction
 
 class Match(GameState):
   def __init__(self):
