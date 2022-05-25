@@ -18,5 +18,9 @@ class Controller():
         return UserAction.DOWN
       case 'a':
         return UserAction.LEFT
+      case 'u':
+        return UserAction.UNDO
+      case 'r':
+        return UserAction.REDO
       case _:
         return UserAction.NULL

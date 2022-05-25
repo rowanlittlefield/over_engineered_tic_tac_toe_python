@@ -2,6 +2,7 @@ from time import sleep
 
 from app.game_state.match.board import Board
 from app.game_state.game_state import GameState
+from app.game_state.match.match_history import MatchHistory
 from app.game_state.match.space import Space
 from app.game_state.state_tick_result import StateTickResult
 from app.game_state.state_status import StateStatus
@@ -11,6 +12,7 @@ class Match(GameState):
   def __init__(self):
     self.board = Board()
     self.current_player = Space.X
+    self.history = MatchHistory()
 
   def render(self) -> None:
     self.board.render()
@@ -31,11 +33,25 @@ class Match(GameState):
   def _handle_user_action(self, user_action: UserAction) -> None:
     match user_action:
       case UserAction.ENTER:
-        was_successful = self.board.set_current_space(self.current_player)
-        if was_successful:
+        board_memento = self.board.set_current_space(self.current_player)
+
+        if board_memento.was_space_set:
+          self.history.append(board_memento)
           self._toggle_current_user()
       case UserAction.UP|UserAction.RIGHT|UserAction.DOWN|UserAction.LEFT:
         self.board.move_cursor(user_action)
+      case UserAction.UNDO:
+        board_memento = self.history.back()
+
+        if board_memento:
+          self.board.undo(board_memento)
+          self._toggle_current_user()
+      case UserAction.REDO:
+        board_memento = self.history.forward()
+
+        if board_memento:
+          self.board.redo(board_memento)
+          self._toggle_current_user()
       case _:
         pass
 

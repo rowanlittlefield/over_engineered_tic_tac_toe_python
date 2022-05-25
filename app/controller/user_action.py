@@ -7,4 +7,6 @@ class UserAction(Enum):
   RIGHT = 'right'
   DOWN = 'down'
   LEFT = 'left'
+  UNDO = 'undo'
+  REDO = 'redo'
   NULL = ''

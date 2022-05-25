@@ -1,5 +1,6 @@
-from app.game_state.match.space import Space
 from app.controller.user_action import UserAction
+from app.game_state.match.board_memento import BoardMemento
+from app.game_state.match.space import Space
 
 class Board:
   def __init__(self):
@@ -67,11 +68,24 @@ class Board:
       case UserAction.LEFT:
         self.cursor_position[1] = (col - 1) % num_cols
   
-  def set_current_space(self, space) -> bool:
-    has_set_space = False
+  def set_current_space(self, space) -> BoardMemento:
+    was_space_set = False
     row, col = self.cursor_position
     if self.grid[row][col] == Space.EMPTY:
       self.grid[row][col] = space
-      has_set_space = True
-    
-    return has_set_space
+      was_space_set = True
+
+    return BoardMemento(
+      position=(row, col),
+      space=space,
+      was_space_set=was_space_set
+    )
+  
+  def undo(self, board_memento: BoardMemento) -> None:
+    row, col = board_memento.position
+    self.grid[row][col] = Space.EMPTY
+
+  def redo(self, board_memento: BoardMemento) -> None:
+    row, col = board_memento.position
+    self.grid[row][col] = board_memento.space
+
