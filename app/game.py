@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 from app.controller.controller import Controller
 from app.game_state.main_menu.main_menu import MainMenu
@@ -28,7 +29,8 @@ class Game():
     match state_tick_result.status:
       case StateStatus.COMPLETED:
         self._state_transition(
-          next_state=state_tick_result.next_state
+          next_state=state_tick_result.next_state,
+          inputs=state_tick_result.inputs
         )
       case _:
         pass
@@ -38,9 +40,9 @@ class Game():
     self.state.render()
     print("")
   
-  def _state_transition(self, *, next_state: str) -> None:
+  def _state_transition(self, *, next_state: str, inputs: dict[str, Any]) -> None:
     next_state_cls = Game.STATE_MAP[next_state]
-    self.state = next_state_cls()
+    self.state = next_state_cls.from_inputs(inputs)
 
 
 def _clear_terminal() -> None:

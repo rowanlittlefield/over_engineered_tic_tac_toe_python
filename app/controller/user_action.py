@@ -9,4 +9,5 @@ class UserAction(Enum):
   LEFT = 'left'
   UNDO = 'undo'
   REDO = 'redo'
+  SAVE = 'save'
   NULL = ''

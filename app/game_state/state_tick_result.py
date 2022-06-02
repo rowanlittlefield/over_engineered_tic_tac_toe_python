@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from typing import Any
 
 from app.game_state.state_status import StateStatus
 
@@ -6,4 +7,4 @@ from app.game_state.state_status import StateStatus
 class StateTickResult():
   status: StateStatus
   next_state: str = ''
-  inputs: dict[str, str] = field(default_factory=dict)
+  inputs: dict[str, Any] = field(default_factory=dict)

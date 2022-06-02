@@ -1,4 +1,6 @@
+import os
 from time import sleep
+from typing import TypeVar, Type, Any
 
 from app.game_state.match.board import Board
 from app.game_state.game_state import GameState
@@ -8,11 +10,52 @@ from app.game_state.state_tick_result import StateTickResult
 from app.game_state.state_status import StateStatus
 from app.controller.user_action import UserAction
 
+T = TypeVar('T', bound='Match')
 class Match(GameState):
-  def __init__(self):
-    self.board = Board()
-    self.current_player = Space.X
-    self.history = MatchHistory()
+  GAME_SAVE_FILE_RELATIVE_LOCATION = "game_saves/save_state.json"
+  
+  def __init__(
+    self,
+    *,
+    board: Board=Board(),
+    current_player: Space=Space.X,
+    history: MatchHistory=MatchHistory()
+  ):
+    self.board = board
+    self.current_player = current_player
+    self.history = history
+
+  @classmethod
+  def from_inputs(cls: Type[T], inputs: dict[str, Any]) -> T:
+    if inputs.get("should_load_game", False):
+      return cls.load_match()
+
+    return cls()
+  
+  @classmethod
+  def load_match(cls: Type[T]) -> T:
+    save_file_path = os.path.join(os.getcwd(), cls.GAME_SAVE_FILE_RELATIVE_LOCATION)
+    with open(save_file_path, 'r') as save_file:
+      history_json = save_file.read()
+
+    match_history = MatchHistory.from_json(history_json)
+    replay = match_history.get_replay()
+    board = Board()
+
+    for board_memento in replay:
+      board.redo(board_memento)
+
+    last_set_space = replay[-1].space
+    if last_set_space == Space.X:
+      current_player = Space.O
+    else:
+      current_player = Space.X
+    
+    return Match(
+      board=board,
+      current_player=current_player,
+      history=match_history
+    ) 
 
   def render(self) -> None:
     self.board.render()
@@ -52,6 +95,8 @@ class Match(GameState):
         if board_memento:
           self.board.redo(board_memento)
           self._toggle_current_user()
+      case UserAction.SAVE:
+        self._save_match()
       case _:
         pass
 
@@ -72,3 +117,10 @@ class Match(GameState):
 
     print(game_over_message)
     sleep(5)
+  
+  def _save_match(self):
+    history_json = self.history.to_json()
+    save_file_path = os.path.join(os.getcwd(), Match.GAME_SAVE_FILE_RELATIVE_LOCATION)
+    
+    with open(save_file_path, 'w') as save_file:
+      save_file.write(history_json)

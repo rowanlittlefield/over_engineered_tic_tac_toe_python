@@ -22,5 +22,7 @@ class Controller():
         return UserAction.UNDO
       case 'r':
         return UserAction.REDO
+      case 'g':
+        return UserAction.SAVE
       case _:
         return UserAction.NULL
