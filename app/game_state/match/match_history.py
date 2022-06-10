@@ -9,9 +9,15 @@ class MatchHistory():
   def __init__(
     self,
     *,
-    previous: list[BoardMemento]=[],
-    later: list[BoardMemento]=[]
+    previous: list[BoardMemento]=None,
+    later: list[BoardMemento]=None
   ):
+    if previous is None:
+      previous = []
+    
+    if later is None:
+      later = []
+  
     self.previous = previous
     self.later = later
 
@@ -34,7 +40,7 @@ class MatchHistory():
 
     return json.dumps(history)
 
-  def append(self, board_memento: BoardMemento):
+  def append(self, board_memento: BoardMemento) -> None:
     self.previous.append(board_memento)
     self.later.clear()
 
