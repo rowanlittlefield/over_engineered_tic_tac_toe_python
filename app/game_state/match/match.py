@@ -17,10 +17,19 @@ class Match(GameState):
   def __init__(
     self,
     *,
-    board: Board=Board(),
-    current_player: Space=Space.X,
-    history: MatchHistory=MatchHistory()
+    board: Board=None,
+    current_player: Space=None,
+    history: MatchHistory=None
   ):
+    if board is None:
+      board = Board()
+
+    if current_player is None:
+      current_player = Space.X
+    
+    if history is None:
+      history = MatchHistory()
+
     self.board = board
     self.current_player = current_player
     self.history = history
