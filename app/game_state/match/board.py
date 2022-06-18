@@ -40,6 +40,10 @@ class Board:
     return None
 
   def _has_won(self, space: Space) -> bool:
+    # Note: This method needs refactoring,
+    # but has been left in the current state
+    # due to time constraints
+
     has_won = False
 
     for row in self.grid:
@@ -50,6 +54,14 @@ class Board:
       for _j, row in enumerate(self.grid):
         column.append(row[i])
       has_won = has_won or all(element == space for element in column)
+    
+    has_won = has_won or (self.grid[0][0] == space and
+                          self.grid[1][1] == space and
+                          self.grid[2][2] == space)
+    
+    has_won = has_won or (self.grid[0][2] == space and
+                          self.grid[1][1] == space and
+                          self.grid[2][0] == space)
 
     return has_won
 
