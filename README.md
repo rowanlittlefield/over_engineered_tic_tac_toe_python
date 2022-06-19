@@ -49,9 +49,3 @@ Calling the `play` method on an instance of `Game` will initiate the gameplay lo
 ### History Feature
 
 The history feature (undo and redo commands) utilize the well-known [memento pattern](https://en.wikipedia.org/wiki/Memento_pattern), where the `Board` class (`app/game_state/match/board.py`) acts as the *originator*, the `BoardMemento` class (`app/game_state/match/board_memento.py`) acts as the *memento*, and the `MatchHistory` class (`app/game_state/match/match_history.py`) acts as the *caretaker*.
-
-Remaining TODOS
-
-* Add Readme
-* Final QA/Bugfixes
-* Upload to Github
