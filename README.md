@@ -6,11 +6,11 @@ A CLI application written in Python for playing tic-tac-toe.
 
 ### Main Menu
 
-(TODO!)
+<img width="170" alt="Screen Shot 2022-06-10 at 11 47 10 AM" src="https://user-images.githubusercontent.com/30376211/174488257-8a8f9e60-1d40-4be7-bedc-7bcd8c951e24.png">
 
 ### Match
 
-(TODO!)
+<img width="68" alt="Screen Shot 2022-06-10 at 11 47 40 AM" src="https://user-images.githubusercontent.com/30376211/174488316-319455d5-64b0-4957-bb8d-dbefcfb5d5b3.png">
 
 ## How to Run
 
